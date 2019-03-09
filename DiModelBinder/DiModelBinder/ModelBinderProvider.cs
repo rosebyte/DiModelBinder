@@ -17,7 +17,7 @@ namespace DiModelBinder
 				throw new ArgumentNullException(nameof(context));
 			}
 
-			if (context.Metadata.BindingSource.Id != WithDependenciesAttribute.Name)
+			if (context.Metadata.BindingSource.Id != WithDiAttribute.Name)
 			{
 				return null;
 			}
