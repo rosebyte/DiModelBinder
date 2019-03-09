@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,15 +17,16 @@ namespace DiModelBinder.IntegrationTests.Controllers
 
 		// GET api/values/5
 		[HttpGet("{id}")]
-		public ActionResult<string> Get(int id)
+		public async Task<IActionResult> Get([WithDi] TestInputModel model)
 		{
-			return "value";
+			return await model.Process();
 		}
 
 		// POST api/values
 		[HttpPost]
-		public void Post([FromBody] string value)
+		public async Task<IActionResult> Post([WithDi] TestInputModel2 model)
 		{
+			return await model.Process();
 		}
 
 		// PUT api/values/5
