@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
-using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 
 namespace DiModelBinder
 {
-	public class ModelBinderProvider
+	public class ModelBinderProvider : IModelBinderProvider
 	{
 		public IModelBinder GetBinder(ModelBinderProviderContext context)
 		{
@@ -22,25 +22,11 @@ namespace DiModelBinder
 				return null;
 			}
 
-			if (!context.Metadata.IsCollectionType &&
-			    (context.Metadata.ModelType.GetTypeInfo().IsInterface ||
-			     context.Metadata.ModelType.GetTypeInfo().IsAbstract) &&
-			    (context.BindingInfo.BindingSource == null ||
-			     !context.BindingInfo.BindingSource
-				     .CanAcceptDataFrom(BindingSource.Services)))
-			{
-				var propertyBinders = new Dictionary<ModelMetadata, IModelBinder>();
-				foreach (var property in context.Metadata.Properties)
-				{
-					propertyBinders.Add(property, context.CreateBinder(property));
-				}
+			var propertyBinders = context.Metadata.Properties.ToDictionary(x => x, context.CreateBinder);
+			var factory = (ILoggerFactory)context.Services.GetService(typeof(ILoggerFactory));
+			var resolver = context.Services.GetService(typeof(DiDependenciesResolver)) as DiDependenciesResolver;
 
-				var factory = (ILoggerFactory) context.Services.GetService(typeof(ILoggerFactory));
-
-				return new DiComplexBinder(propertyBinders, factory);
-			}
-
-			return null;
+			return new DiComplexBinder(propertyBinders, factory, resolver);
 		}
 	}
 }
