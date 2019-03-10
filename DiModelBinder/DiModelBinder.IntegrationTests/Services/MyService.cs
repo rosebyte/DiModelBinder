@@ -4,9 +4,16 @@ namespace DiModelBinder.IntegrationTests
 {
 	public class MyService : IMyService
 	{
-		public string FormatInputs(int id, DateTime created, bool readOnly = false)
+		public string FormatInputs(int id, DateTime created, bool? readOnly = null)
 		{
-			return $"ID: {id} | Created: {created} | ReadOnly {readOnly}";
+			var result = $"ID: {id} | Created: {created:MM/dd/yyyy}";
+
+			if (readOnly.HasValue)
+			{
+				result += $" | ReadOnly {readOnly}";
+			}
+
+			return result;
 		}
 	}
 }

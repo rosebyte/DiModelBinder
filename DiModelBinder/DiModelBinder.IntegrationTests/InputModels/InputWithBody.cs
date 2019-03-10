@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DiModelBinder.IntegrationTests
 {
-	public class TestInputModel
+	public class InputWithBody
 	{
 		private readonly IMyService _service;
 
-		public TestInputModel(IMyService service) => _service = service;
+		public InputWithBody(IMyService service) => _service = service;
 
 		[FromRoute]
 		public int? Id { get; set; }
@@ -16,12 +16,12 @@ namespace DiModelBinder.IntegrationTests
 		[FromQuery]
 		public DateTime Created { get; set; } = DateTime.MinValue;
 
-		//[FromBody]
-		//public bool ReadOnly { get; set; }
+		[FromBody]
+		public ReadOnlyBody Body { get; set; }
 
 		public async Task<IActionResult> Process()
 		{
-			var result = new JsonResult(_service.FormatInputs(Id ?? 0, Created, false));
+			var result = new JsonResult(_service.FormatInputs(Id ?? 0, Created, Body.ReadOnly));
 			return await Task.FromResult(result);
 		}
 	}

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DiModelBinder
 {
-	public class DiDependenciesResolver
+	public class DiResolver : IDiResolver
 	{
 		private static readonly Dictionary<Type, ObjectActivator> Creators = new Dictionary<Type, ObjectActivator>();
 
@@ -33,7 +33,6 @@ namespace DiModelBinder
 					{
 						Creators[type] = creator = CreateCreator(type, provider);
 					}
-
 				}
 
 				result = creator();
@@ -44,7 +43,7 @@ namespace DiModelBinder
 
 		private Type FindType(Type type, IServiceProvider provider, IEnumerable<Attribute> attributes)
 		{
-			var dtype = attributes.FirstOrDefault(x => x.GetType() == typeof(ResolveWithAttribute));
+			var dtype = attributes?.FirstOrDefault(x => x.GetType() == typeof(ResolveWithAttribute));
 			if (dtype != null)
 			{
 				return ((ResolveWithAttribute)dtype).Type;
@@ -57,16 +56,15 @@ namespace DiModelBinder
 				return ((ResolveWithAttribute)ctype).Type;
 			}
 
-			var results = Assembly
-				.GetExecutingAssembly()
+			return Assembly
+				.GetAssembly(type)
 				.GetTypes()
-				.Where(type2 => type.IsAssignableFrom(type))
-				.FirstOrDefault(x => x.GetConstructors()
+				.Where(x => x.IsClass)
+				.Where(type.IsAssignableFrom)
+				.SingleOrDefault(x => x.GetConstructors()
 					.OrderBy(y => y.GetParameters().Length)
-					.Any(y => y.GetParameters()
-						.All(z => ResolveModel(z.ParameterType, provider) != null)));
-
-			return results;
+					.Any(y => y.GetParameters().Length == 0 || y.GetParameters()
+						          .All(z => ResolveModel(z.ParameterType, provider) != null)));
 		}
 
 		private ObjectActivator CreateCreator(Type type, IServiceProvider provider)
@@ -77,7 +75,11 @@ namespace DiModelBinder
 			foreach (var constructor in constructors)
 			{
 				var resol = constructor.GetParameters()
-					.Select(x => new { Type = x.ParameterType, Value = ResolveModel(x.ParameterType, provider) })
+					.Select(x => new
+					{
+						Type = x.ParameterType,
+						Value = ResolveModel(x.ParameterType, provider, x.GetCustomAttributes())
+					})
 					.ToArray();
 
 				if (resol.Any(x => x.Value == null))

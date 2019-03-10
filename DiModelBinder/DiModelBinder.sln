@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiModelBinder", "DiModelBinder\DiModelBinder.csproj", "{A172B58A-722A-4F5B-BB13-B128400BBB55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiModelBinder", "DiModelBinder\DiModelBinder.csproj", "{A172B58A-722A-4F5B-BB13-B128400BBB55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiModelBinder.Tests", "DiModelBinder.Tests\DiModelBinder.Tests.csproj", "{02E2C65C-2245-4D81-ACF2-28DA11A7E22F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiModelBinder.Tests", "DiModelBinder.Tests\DiModelBinder.Tests.csproj", "{02E2C65C-2245-4D81-ACF2-28DA11A7E22F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiModelBinder.IntegrationTests", "DiModelBinder.IntegrationTests\DiModelBinder.IntegrationTests.csproj", "{C68A6D04-0070-48B1-BE39-65A136B0F0B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiModelBinder.Integration", "DiModelBinder.IntegrationTests\DiModelBinder.Integration.csproj", "{C68A6D04-0070-48B1-BE39-65A136B0F0B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

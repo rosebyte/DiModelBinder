@@ -21,9 +21,9 @@ namespace DiModelBinder.IntegrationTests
 			services.AddTransient<IMyService, MyService>();
 			services.AddModelBindingDiResolver();
 
-			//services.AddTransient<TestInputModel>();
+			//services.AddTransient<InputWithBody>();
 			services
-				.AddMvc(o => o.AddModelBinderProvider())
+				.AddMvc(o => o.InsertDiModelBinderProvider())
 				.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 		}
 

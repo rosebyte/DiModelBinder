@@ -2,14 +2,19 @@
 
 namespace Microsoft.AspNetCore.Mvc
 {
-	[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Class)]
+	/// <summary>
+	/// Helps resolver to determine implementation class for given interface or
+	/// abstract class
+	/// </summary>
+	[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Interface)]
 	public class ResolveWithAttribute : Attribute
 	{
 		public Type Type;
 
-		public ResolveWithAttribute(Type type)
-		{
-			Type = type;
-		}
+		/// <summary>
+		/// Constructs an instance of <see cref="ResolveWithAttribute"/>.
+		/// </summary>
+		/// <param name="type">Type implementing given interface or abstract class</param>
+		public ResolveWithAttribute(Type type) => Type = type;
 	}
 }

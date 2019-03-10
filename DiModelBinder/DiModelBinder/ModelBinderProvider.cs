@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -17,16 +15,24 @@ namespace DiModelBinder
 				throw new ArgumentNullException(nameof(context));
 			}
 
-			if (context.Metadata.BindingSource.Id != WithDiAttribute.Name)
+			if (context.Metadata.BindingSource?.Id != nameof(WithDiAttribute))
 			{
 				return null;
 			}
 
 			var propertyBinders = context.Metadata.Properties.ToDictionary(x => x, context.CreateBinder);
-			var factory = (ILoggerFactory)context.Services.GetService(typeof(ILoggerFactory));
-			var resolver = context.Services.GetService(typeof(DiDependenciesResolver)) as DiDependenciesResolver;
 
-			return new DiComplexBinder(propertyBinders, factory, resolver);
+			if (!(context.Services.GetService(typeof(ILoggerFactory)) is ILoggerFactory factory))
+			{
+				throw new Exception("Missing factory");
+			}
+
+			if (!(context.Services.GetService(typeof(IDiResolver)) is IDiResolver resolver))
+			{
+				throw new Exception("Missing resolver");
+			}
+
+			return new DiBinder(propertyBinders, factory, resolver);
 		}
 	}
 }
