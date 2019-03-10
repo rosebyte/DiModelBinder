@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>RoseByte.DiModelBinder</id>
+    <version>1.0.0</version>
+    <title>DiModelBinder</title>
+    <authors>Jaroslav Ruzicka</authors>
+    <owners>Jaroslav Ruzicka</owners>
+    <licenseUrl>https://github.com/rosebyte/DiModelBinder/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/rosebyte/DiModelBinder/tree/master</projectUrl>
+    <iconUrl>https://img.icons8.com/windows/32/000000/one-way-transition.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Enables ASP Core MVC model binding with DI.</description>
+    <releaseNotes>First version.</releaseNotes>
+    <copyright>Copyright 2019</copyright>
+    <tags>ASP MVC NET Core ModelBinding</tags>
+    <dependencies>
+        <dependency id="Microsoft.AspNetCore.Mvc.Core" version="2.1.0"/>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\DiModelBinder\DiModelBinder\bin\Release\netstandard2.0\RoseByte.DiModelBinder.dll" target="lib\netcore" />
+  </files>
+</package>
