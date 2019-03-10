@@ -23,27 +23,27 @@ After configuration we can start using new parameter attribute [WithDi]. This at
 The class can have three types of properties binded from query, route or body.
 
 ```csharp
-  public class InputWithBody
+public class InputWithBody
+{
+	private readonly IMyService _service;
+
+	public InputWithBody(IMyService service) => _service = service;
+
+	[FromRoute]
+	public int? Id { get; set; }
+
+	[FromQuery]
+	public DateTime Created { get; set; } = DateTime.MinValue;
+
+	[FromBody]
+	public ReadOnlyBody Body { get; set; }
+
+	public async Task<IActionResult> Process()
 	{
-		private readonly IMyService _service;
-
-		public InputWithBody(IMyService service) => _service = service;
-
-		[FromRoute]
-		public int? Id { get; set; }
-
-		[FromQuery]
-		public DateTime Created { get; set; } = DateTime.MinValue;
-
-		[FromBody]
-		public ReadOnlyBody Body { get; set; }
-
-		public async Task<IActionResult> Process()
-		{
-			var result = new JsonResult(_service.FormatInputs(Id ?? 0, Created, Body.ReadOnly));
-			return await Task.FromResult(result);
-		}
+		var result = new JsonResult(_service.FormatInputs(Id ?? 0, Created, Body.ReadOnly));
+		return await Task.FromResult(result);
 	}
+}
 ```
 Please note that property with [FromBody] attribute is complex type. This is preferred way of binding complex type.
 
@@ -51,7 +51,7 @@ Please note that property with [FromBody] attribute is complex type. This is pre
 Dependencies are primarily resolved via framework's DI (to use it we must add these dependencies to DI container at startup). However, sometimes this can be too restrictive and boilerplate prone. That's why some dynamic resolving was added. This resolving can resolve class dependencies and interface dependencies with just one implementation containing resolvable constructor (resolvable constructor is empty or containing only resolvable dependencies).
 
 ```csharp
-  public InputWithBody(IMyService service, User user)
+public InputWithBody(IMyService service, User user)
 ```
 This constructor is OK when User has resolvable constructor and IMyservice is implemented by one class with at least one resolvable constructor. Of course, if any of these dependencies are in framework's DI container, it's allways OK.
 
@@ -65,7 +65,9 @@ There is one way to help MVC with resolving - [ResolveWith] attribute. It can be
 when on interface, it says that this interface should be resolved with the type.
 
 ```csharp
-  [ResolveWith(typeof(OrderRepository))]
-	public interface IRepository
-	{ }
+[ResolveWith(typeof(OrderRepository))]
+public interface IRepository
+{
+  ...
+}
 ```
