@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using RoseByte.DiModelBinder;
 
-namespace DiModelBinder
+namespace Microsoft.AspNetCore.Mvc
 {
 	public static class Configuration
 	{

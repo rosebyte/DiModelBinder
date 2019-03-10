@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DiModelBinder
+namespace RoseByte.DiModelBinder
 {
 	public class DiResolver : IDiResolver
 	{

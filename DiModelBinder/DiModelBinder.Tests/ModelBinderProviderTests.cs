@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Moq;
+using RoseByte.DiModelBinder;
 using Xunit;
 using MsILoggerFactory = Microsoft.Extensions.Logging.ILoggerFactory;
 

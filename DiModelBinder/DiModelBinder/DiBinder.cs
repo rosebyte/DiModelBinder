@@ -5,7 +5,7 @@ using BindingDictionary = System.Collections.Generic.IDictionary<
 	Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata, 
 	Microsoft.AspNetCore.Mvc.ModelBinding.IModelBinder>;
 
-namespace DiModelBinder
+namespace RoseByte.DiModelBinder
 {
 	public class DiBinder : ComplexTypeModelBinder
 	{

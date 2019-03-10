@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DiModelBinder
+namespace RoseByte.DiModelBinder
 {
 	public interface IDiResolver
 	{

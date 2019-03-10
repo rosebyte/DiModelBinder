@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Microsoft.Extensions.Logging;
 using Moq;
+using RoseByte.DiModelBinder;
 using Xunit;
 
 namespace DiModelBinder.Tests

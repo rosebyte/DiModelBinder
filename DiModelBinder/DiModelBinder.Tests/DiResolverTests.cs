@@ -1,6 +1,7 @@
 ﻿using System;
 using DiModelBinder.Tests.TestObjects;
 using Moq;
+using RoseByte.DiModelBinder;
 using Xunit;
 
 namespace DiModelBinder.Tests

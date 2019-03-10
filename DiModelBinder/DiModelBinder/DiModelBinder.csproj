@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>RoseByte.DiModelBinder</AssemblyName>
+    <RootNamespace>RoseByte.DiModelBinder</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
