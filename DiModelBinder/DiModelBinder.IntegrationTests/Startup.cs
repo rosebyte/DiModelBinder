@@ -19,7 +19,7 @@ namespace DiModelBinder.IntegrationTests
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddTransient<IMyService, MyService>();
-			services.AddModelBindingDiResolver();
+			services.RegisterDiTypes();
 
 			//services.AddTransient<InputWithBody>();
 			services

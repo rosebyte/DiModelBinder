@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Linq;
+using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 using RoseByte.DiModelBinder;
 
 namespace Microsoft.AspNetCore.Mvc
@@ -13,10 +15,33 @@ namespace Microsoft.AspNetCore.Mvc
 			options.ModelBinderProviders.Insert(0, new ModelBinderProvider());
 
 		/// <summary>
-		/// Adds resolver to resolve model types dynamically
+		/// Registers all types decorated with [DiType] attribute
 		/// </summary>
-		/// <param name="services">IServiceCollection in application Startup class</param>
-		public static void AddModelBindingDiResolver(this IServiceCollection services) => 
-			services.AddSingleton<IDiResolver, DiResolver>();
+		/// <param name="services">IServiceCollection instance in Startup</param>
+		public static void RegisterDiTypes(this IServiceCollection services)
+		{
+			var types = Assembly
+				.GetCallingAssembly()
+				.GetTypes()
+				.Where(x => x.GetCustomAttributes(typeof(DiTypeAttribute), true).Length > 0)
+				.ToList();
+
+			foreach (var type in types)
+			{
+				var attribute = type.GetCustomAttributes(typeof(DiTypeAttribute), true).First();
+
+				if (!(attribute is DiTypeAttribute diAttribute))
+				{
+					continue;
+				}
+
+				services.AddTransient(type);
+				
+				foreach (var inter in diAttribute.Interfaces)
+				{
+					services.AddTransient(inter, type);
+				}
+			}
+		}
 	}
 }

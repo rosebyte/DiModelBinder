@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DiModelBinder.IntegrationTests
 {
-	public class Input
+	[DiType(typeof(IInput))]
+	public class Input : IInput
 	{
 		private readonly IMyService _service;
 

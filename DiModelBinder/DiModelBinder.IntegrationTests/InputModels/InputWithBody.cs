@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DiModelBinder.IntegrationTests
 {
+	[DiType]
 	public class InputWithBody
 	{
 		private readonly IMyService _service;

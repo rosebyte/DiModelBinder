@@ -25,7 +25,6 @@ namespace DiModelBinder.Tests
 
 			var services = new Mock<IServiceProvider>();
 			services.Setup(x => x.GetService(typeof(MsILoggerFactory))).Returns(loggerFactory.Object);
-			services.Setup(x => x.GetService(typeof(IDiResolver))).Returns(new DiResolver());
 
 			var context = new Mock<ModelBinderProviderContext>();
 			context.Setup(x => x.Metadata).Returns(metadata.Object);
@@ -51,7 +50,6 @@ namespace DiModelBinder.Tests
 
 			var services = new Mock<IServiceProvider>();
 			services.Setup(x => x.GetService(typeof(MsILoggerFactory))).Returns(loggerFactory.Object);
-			services.Setup(x => x.GetService(typeof(IDiResolver))).Returns(new DiResolver());
 
 			var context = new Mock<ModelBinderProviderContext>();
 			context.Setup(x => x.Metadata).Returns(metadata.Object);

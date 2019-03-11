@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 namespace Microsoft.AspNetCore.Mvc
 {
 	/// <summary>
-	/// Marks parameter to be bind with constrictor DI injection.
+	/// Marks parameter to be bind with constructor DI injection.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Parameter)]
 	public class WithDiAttribute : Attribute, IBindingSourceMetadata

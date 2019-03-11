@@ -23,10 +23,6 @@ namespace DiModelBinder.Tests
 			loggerFactory.Setup(x => x.CreateLogger(It.IsAny<string>()))
 				.Returns(logger.Object);
 
-			var resolver = new Mock<IDiResolver>();
-			resolver.Setup(x => x.ResolveModel(typeof(TestModel), It.IsAny<IServiceProvider>(), null))
-				.Returns(new TestModel());
-
 			var bindingSource = new BindingSource(nameof(WithDiAttribute), nameof(WithDiAttribute), true, true);
 
 			var prop = new Mock<ModelMetadata>(ModelMetadataIdentity.ForProperty(typeof(TestModel), "Name", typeof(string)));
@@ -55,8 +51,7 @@ namespace DiModelBinder.Tests
 
 			var sut = new DiBinder(
 				new Dictionary<ModelMetadata, IModelBinder>{{metadata.Object, binder.Object}},
-				loggerFactory.Object, 
-				resolver.Object);
+				loggerFactory.Object);
 
 			try
 			{
@@ -65,7 +60,7 @@ namespace DiModelBinder.Tests
 			catch
 			{}
 
-			resolver.Verify(x => x.ResolveModel(typeof(TestModel), It.IsAny<IServiceProvider>(), null));
+			services.Verify(x => x.GetService(typeof(TestModel)));
 		}
 	}
 }

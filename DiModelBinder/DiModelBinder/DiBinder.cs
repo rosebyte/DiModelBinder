@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using System;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using BindingDictionary = System.Collections.Generic.IDictionary<
 	Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata, 
@@ -9,17 +12,12 @@ namespace RoseByte.DiModelBinder
 {
 	public class DiBinder : ComplexTypeModelBinder
 	{
-		private readonly IDiResolver _resolver;
-
-		public DiBinder(BindingDictionary binders, ILoggerFactory logger, IDiResolver resolver) 
-			: base(binders, logger)
-		{
-			_resolver = resolver;
-		}
+		public DiBinder(BindingDictionary binders, ILoggerFactory logger) : base(binders, logger)
+		{ }
 
 		protected override object CreateModel(ModelBindingContext context)
 		{
-			return _resolver.ResolveModel(context.ModelType, context.HttpContext.RequestServices);
+			return context.HttpContext.RequestServices.GetService(context.ModelType);
 		}
 	}
 }

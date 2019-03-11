@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using Moq;
 using Xunit;
 
 namespace DiModelBinder.Tests
@@ -17,12 +15,21 @@ namespace DiModelBinder.Tests
 		}
 
 		[Fact]
-		public void ShouldAddDiResolver()
+		public void ShouldRegisterType()
 		{
-			var services = new Mock<IServiceCollection>();
-			services.Object.AddModelBindingDiResolver();
+			var options = new MvcOptions();
+			options.InsertDiModelBinderProvider();
 
-			services.Verify(x => x.Add(It.IsAny<ServiceDescriptor>()));
+			Assert.Equal(1, options.ModelBinderProviders.Count);
+		}
+
+		[Fact]
+		public void ShouldRegisterTypeForInterfaces()
+		{
+			var options = new MvcOptions();
+			options.InsertDiModelBinderProvider();
+
+			Assert.Equal(1, options.ModelBinderProviders.Count);
 		}
 	}
 }
