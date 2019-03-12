@@ -46,28 +46,3 @@ public class InputWithBody
 }
 ```
 Please note that property with [FromBody] attribute is complex type. This is preferred way of binding complex type.
-
-## Dynamic resolving
-Dependencies are primarily resolved via framework's DI (to use it we must add these dependencies to DI container at startup). However, sometimes this can be too restrictive and boilerplate prone. That's why some dynamic resolving was added. This resolving can resolve class dependencies and interface dependencies with just one implementation containing resolvable constructor (resolvable constructor is empty or containing only resolvable dependencies).
-
-```csharp
-public InputWithBody(IMyService service, User user)
-```
-This constructor is OK when User has resolvable constructor and IMyservice is implemented by one class with at least one resolvable constructor. Of course, if any of these dependencies are in framework's DI container, it's allways OK.
-
-## ResolveWith attribute
-There is one way to help MVC with resolving - [ResolveWith] attribute. It can be placed on parameter or interface and accepts name of class definition to resolve given dependency. When on parameter it says that the parameter should be resolved with particular type, 
-
-```csharp
-  public InputWithBody([ResolveWith(typeof(SomeService))]IMyService service)
-```
-
-when on interface, it says that this interface should be resolved with the type.
-
-```csharp
-[ResolveWith(typeof(OrderRepository))]
-public interface IRepository
-{
-  ...
-}
-```
