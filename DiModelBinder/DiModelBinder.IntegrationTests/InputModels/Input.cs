@@ -17,11 +17,11 @@ namespace DiModelBinder.IntegrationTests
 		public int? Id { get; set; }
 
 		[FromQuery]
-		public DateTime Created { get; set; } = DateTime.MinValue;
+		public DateTime? Created { get; set; }
 
 		public async Task<IActionResult> Process()
 		{
-			var result = new JsonResult(_service.FormatInputs(Id ?? 0, Created));
+			var result = new JsonResult(_service.FormatInputs(Id ?? 0, Created ?? DateTime.MinValue));
 			return await Task.FromResult(result);
 		}
 	}

@@ -8,7 +8,7 @@ namespace DiModelBinder.IntegrationTests
 {
 	public interface IInput
 	{
-		DateTime Created { get; set; }
+		DateTime? Created { get; set; }
 		int? Id { get; set; }
 		Task<IActionResult> Process();
 	}

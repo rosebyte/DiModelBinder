@@ -42,7 +42,7 @@ namespace DiModelBinder.Tests
 		public async Task ShouldGetApiValue()
 		{
 			const int id = 123;
-			var created = DateTime.Now.ToString("dd.MM.yyyy");
+			var created = DateTime.Now.ToString("MM/dd/yyyy");
 
 			var response = await _client.GetAsync($"/api/values/{id}?Created={created}");
 			response.EnsureSuccessStatusCode();
