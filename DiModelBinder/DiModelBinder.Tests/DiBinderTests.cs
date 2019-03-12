@@ -49,7 +49,7 @@ namespace DiModelBinder.Tests
 			binder.Setup(x => x.BindModelAsync(It.IsAny<ModelBindingContext>())).Returns(Task.CompletedTask)
 				.Callback((ModelBindingContext y) => y.Result = ModelBindingResult.Success(new TestModel()));
 
-			var sut = new DiBinder(
+			var sut = new ModelBinder(
 				new Dictionary<ModelMetadata, IModelBinder>{{metadata.Object, binder.Object}},
 				loggerFactory.Object);
 

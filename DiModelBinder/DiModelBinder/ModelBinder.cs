@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using BindingDictionary = System.Collections.Generic.IDictionary<
+using Bindings = System.Collections.Generic.IDictionary<
 	Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata, 
 	Microsoft.AspNetCore.Mvc.ModelBinding.IModelBinder>;
 
 namespace RoseByte.DiModelBinder
 {
-	public class DiBinder : ComplexTypeModelBinder
+	public class ModelBinder : ComplexTypeModelBinder
 	{
-		public DiBinder(BindingDictionary binders, ILoggerFactory logger) : base(binders, logger)
+		public ModelBinder(Bindings binders, ILoggerFactory logger) : base(binders, logger)
 		{ }
 
 		protected override object CreateModel(ModelBindingContext context)

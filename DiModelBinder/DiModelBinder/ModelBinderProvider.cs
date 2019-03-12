@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
+using RoseByte.DiModelBinder.Attributes;
 
 namespace RoseByte.DiModelBinder
 {
@@ -17,13 +18,24 @@ namespace RoseByte.DiModelBinder
 
 			if (context.Metadata.BindingSource?.Id != nameof(WithDiAttribute))
 			{
-				return null;
+				if (context.Metadata.BindingSource != null)
+				{
+					return null;
+				}
+
+				var modelHasContainerServiceAttribute = context.Metadata.ModelType
+					.GetCustomAttributes(typeof(ContainerServiceAttribute), true)
+					.Any();
+
+				if (!modelHasContainerServiceAttribute)
+				{
+					return null;
+				}
 			}
 
-			var propertyBinders = context.Metadata.Properties.ToDictionary(x => x, context.CreateBinder);
-			var factory = context.Services.GetService(typeof(ILoggerFactory)) as ILoggerFactory;
-			
-			return new DiBinder(propertyBinders, factory);
+			return new ModelBinder(
+				context.Metadata.Properties.ToDictionary(x => x, context.CreateBinder),
+				context.Services.GetService(typeof(ILoggerFactory)) as ILoggerFactory);
 		}
 	}
 }

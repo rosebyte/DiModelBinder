@@ -9,11 +9,11 @@ namespace DiModelBinder.IntegrationTests.Controllers
 	public class ValuesController : ControllerBase
 	{
 		[HttpGet("{id}")]
-		public Task<IActionResult> Get([WithDi]Input input, DateTime date)
+		public Task<IActionResult> Get(Input input, DateTime date)
 			=> input.Process();
 
 		[HttpPost("{id}")]
-		public Task<IActionResult> Post([WithDi]InputWithBody withBody, DateTime date) 
+		public Task<IActionResult> Post(InputWithBody withBody, DateTime date) 
 			=> withBody.Process();
 	}
 }

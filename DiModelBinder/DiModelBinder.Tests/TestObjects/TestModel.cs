@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using RoseByte.DiModelBinder.Attributes;
 
 namespace DiModelBinder.Tests.TestObjects
 {
-	[DiType(typeof(ITestModel))]
+	[ContainerService]
 	public class TestModel : ITestModel
 	{
 		[FromQuery]

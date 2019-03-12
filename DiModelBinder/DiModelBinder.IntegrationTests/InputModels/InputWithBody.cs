@@ -2,10 +2,11 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using RoseByte.DiModelBinder.Attributes;
 
 namespace DiModelBinder.IntegrationTests
 {
-	[DiType]
+	[ContainerService]
 	public class InputWithBody
 	{
 		private readonly IMyService _service;

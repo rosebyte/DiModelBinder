@@ -15,7 +15,9 @@ namespace DiModelBinder.Tests
 		[Fact]
 		public void ShouldReturnBinder()
 		{
-			var bindingSource = new BindingSource(nameof(WithDiAttribute), nameof(WithDiAttribute), true, true);
+			var bindingSource = new BindingSource(
+				nameof(WithDiAttribute), 
+				nameof(WithDiAttribute), true, true);
 
 			var metadata = new Mock<ModelMetadata>(ModelMetadataIdentity.ForType(typeof(TestModel)));
 			metadata.Setup(x => x.BindingSource).Returns(bindingSource);
@@ -34,7 +36,7 @@ namespace DiModelBinder.Tests
 
 			var result = sut.GetBinder(context.Object);
 
-			Assert.IsType<DiBinder>(result);
+			Assert.IsType<ModelBinder>(result);
 		}
 
 		[Fact]
