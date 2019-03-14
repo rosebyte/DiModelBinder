@@ -11,6 +11,7 @@ public void ConfigureServices(IServiceCollection services)
 	services.AddMvc(o => o.InsertDiModelBinderProvider());
 }
 ```
+
 Default, the RegisterDiClients extension scan entry assembly and calling assembly, if you need to register some other assembly, this default can be overriden by filling these assemblies (note that it is an override so you must then explicitly use entry assembly and / or calling assembly if you want to scan them)
 
 ```csharp
@@ -19,12 +20,6 @@ services.RegisterDiClients(Assembly.GetExecutingAssembly(), Assembly.GetCallingA
 
 ## DiClient Attribute
 After configuration we can start using new parameter attribute [DiClient]. This attribute marks classes that should be binded after dependency resolving. 
-
-```csharp
-public Task<IActionResult> Get([DiClient]Input input) => input.Process();
-```
-
-As default, lifespan of that class is transient. If you need some other lifespan, you can fill it in attribute's constructor
 
 ```csharp
 [DiClient]
@@ -45,7 +40,7 @@ public class ExampleModel
 }
 ```
 
-This attribute also marks that we want to do model binding with some model placed in ServiceContainer (if you use some class the way, you must place it to container manually).
+As default, lifespan of that class is transient. If you need some other lifespan, you can fill it in attribute's constructor
 
 ```csharp
 [DiClient(ServiceLifetime.Scoped)]
@@ -67,6 +62,12 @@ public class ScopedExampleModel
 		return await Task.FromResult(result);
 	}
 }
+```
+
+This attribute also marks that we want to do model binding with some model placed in ServiceContainer (if you use some class the way, you must place it to container manually).
+
+```csharp
+public Task<IActionResult> Get([DiClient]Input input) => input.Process();
 ```
 
 ## Binded class
@@ -101,4 +102,5 @@ public class InputWithBody
 	}
 }
 ```
+
 Please note that property with [FromBody] attribute is complex type. This is preferred way of binding complex type.
