@@ -16,7 +16,7 @@ namespace RoseByte.DiModelBinder
 				throw new ArgumentNullException(nameof(context));
 			}
 
-			if (context.Metadata.BindingSource?.Id != nameof(WithDiAttribute))
+			if (context.Metadata.BindingSource?.Id != nameof(DiClientAttribute))
 			{
 				if (context.Metadata.BindingSource != null)
 				{
@@ -24,7 +24,7 @@ namespace RoseByte.DiModelBinder
 				}
 
 				var modelHasContainerServiceAttribute = context.Metadata.ModelType
-					.GetCustomAttributes(typeof(ContainerServiceAttribute), true)
+					.GetCustomAttributes(typeof(DiClientAttribute), true)
 					.Any();
 
 				if (!modelHasContainerServiceAttribute)

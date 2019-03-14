@@ -43,11 +43,33 @@ namespace DiModelBinder.Tests
 		{
 			const int id = 123;
 			var created = DateTime.Now.ToString("MM/dd/yyyy");
+			var userName = "TestName";
 
-			var response = await _client.GetAsync($"/api/values/{id}?Created={created}");
+			var request = new HttpRequestMessage(
+				HttpMethod.Get, 
+				$"/api/values/{id}?Created={created}");
+			request.Headers.Add("UserName", userName);
+
+			var response = await _client.SendAsync(request);
 			response.EnsureSuccessStatusCode();
 			var responseString = await response.Content.ReadAsStringAsync();
-			var expected = $"\"ID: {id} | Created: {created}\"";
+			var expected = $"\"ID: {id} | Created: {created} | UserName: {userName}\"";
+			Assert.Equal(expected, responseString);
+		}
+
+		[Fact]
+		public async Task ShouldGetApiValueWithParamAttribute()
+		{
+			const int id = 123;
+			var userName = "TestName";
+
+			var request = new HttpRequestMessage(HttpMethod.Get, $"/api/values/{id}");
+			request.Headers.Add("UserName", userName);
+			
+			var response = await _client.SendAsync(request);
+			response.EnsureSuccessStatusCode();
+			var responseString = await response.Content.ReadAsStringAsync();
+			var expected = $"\"ID: {id} | Created: 01.01.0001 | UserName: {userName}\"";
 			Assert.Equal(expected, responseString);
 		}
 	}

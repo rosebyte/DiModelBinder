@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Moq;
 using RoseByte.DiModelBinder;
+using RoseByte.DiModelBinder.Attributes;
 using Xunit;
 using MsILoggerFactory = Microsoft.Extensions.Logging.ILoggerFactory;
 
@@ -16,8 +17,8 @@ namespace DiModelBinder.Tests
 		public void ShouldReturnBinder()
 		{
 			var bindingSource = new BindingSource(
-				nameof(WithDiAttribute), 
-				nameof(WithDiAttribute), true, true);
+				nameof(DiClientAttribute), 
+				nameof(DiClientAttribute), true, true);
 
 			var metadata = new Mock<ModelMetadata>(ModelMetadataIdentity.ForType(typeof(TestModel)));
 			metadata.Setup(x => x.BindingSource).Returns(bindingSource);

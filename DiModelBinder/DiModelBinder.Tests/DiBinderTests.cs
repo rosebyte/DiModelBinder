@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Microsoft.Extensions.Logging;
 using Moq;
 using RoseByte.DiModelBinder;
+using RoseByte.DiModelBinder.Attributes;
 using Xunit;
 
 namespace DiModelBinder.Tests
@@ -23,7 +24,7 @@ namespace DiModelBinder.Tests
 			loggerFactory.Setup(x => x.CreateLogger(It.IsAny<string>()))
 				.Returns(logger.Object);
 
-			var bindingSource = new BindingSource(nameof(WithDiAttribute), nameof(WithDiAttribute), true, true);
+			var bindingSource = new BindingSource(nameof(DiClientAttribute), nameof(DiClientAttribute), true, true);
 
 			var prop = new Mock<ModelMetadata>(ModelMetadataIdentity.ForProperty(typeof(TestModel), "Name", typeof(string)));
 			prop.Setup(x => x.IsBindingAllowed).Returns(true);

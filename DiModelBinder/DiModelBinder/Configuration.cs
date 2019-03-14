@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using RoseByte.DiModelBinder;
 using RoseByte.DiModelBinder.Attributes;
 
-namespace Microsoft.AspNetCore.Mvc
+namespace RoseByte.DiModelBinder
 {
 	public static class Configuration
 	{
@@ -18,11 +16,11 @@ namespace Microsoft.AspNetCore.Mvc
 			options.ModelBinderProviders.Insert(0, new ModelBinderProvider());
 
 		/// <summary>
-		/// Registers all types decorated with ContainerService family attributes
+		/// Registers all types decorated with <see cref="DiClientAttribute"/> attribute
 		/// </summary>
 		/// <param name="services">IServiceCollection instance in Startup</param>
 		/// <param name="assemblies">Assemblies to scan, default is EntryAssembly</param>
-		public static void RegisterDiTypes(this IServiceCollection services, params Assembly[] assemblies)
+		public static void RegisterDiClients(this IServiceCollection services, params Assembly[] assemblies)
 		{
 			if (!assemblies.Any())
 			{
@@ -31,16 +29,16 @@ namespace Microsoft.AspNetCore.Mvc
 
 			var types = assemblies
 				.SelectMany(x => x.GetTypes())
-				.Where(x => x.GetCustomAttributes(typeof(ContainerServiceAttribute), false).Any())
+				.Where(x => x.GetCustomAttributes(typeof(DiClientAttribute), false).Any())
 				.Distinct();
 
 			foreach (var type in types)
 			{
 				var attribute = type
-					.GetCustomAttributes(typeof(ContainerServiceAttribute), false)
+					.GetCustomAttributes(typeof(DiClientAttribute), false)
 					.Single();
 
-				if (attribute is ContainerServiceAttribute service)
+				if (attribute is DiClientAttribute service)
 				{
 					switch (service.Lifetime)
 					{

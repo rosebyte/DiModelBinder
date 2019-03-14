@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using RoseByte.DiModelBinder.Attributes;
 
 namespace DiModelBinder.IntegrationTests.Controllers
 {
@@ -8,6 +9,10 @@ namespace DiModelBinder.IntegrationTests.Controllers
 	[ApiController]
 	public class ValuesController : ControllerBase
 	{
+		[HttpGet("unregistered/{id}")]
+		public Task<IActionResult> Get([DiClient] UnregisteredInput input)
+			=> input.Process();
+
 		[HttpGet("{id}")]
 		public Task<IActionResult> Get(Input input, DateTime date)
 			=> input.Process();

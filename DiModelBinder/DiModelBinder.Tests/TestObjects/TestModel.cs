@@ -4,7 +4,7 @@ using RoseByte.DiModelBinder.Attributes;
 
 namespace DiModelBinder.Tests.TestObjects
 {
-	[ContainerService]
+	[DiClient]
 	public class TestModel : ITestModel
 	{
 		[FromQuery]

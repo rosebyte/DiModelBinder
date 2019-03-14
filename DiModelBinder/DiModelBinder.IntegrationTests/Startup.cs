@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RoseByte.DiModelBinder;
 
 namespace DiModelBinder.IntegrationTests
 {
@@ -19,9 +21,8 @@ namespace DiModelBinder.IntegrationTests
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddTransient<IMyService, MyService>();
-			services.RegisterDiTypes();
+			services.RegisterDiClients();
 
-			//services.AddTransient<InputWithBody>();
 			services
 				.AddMvc(o => o.InsertDiModelBinderProvider())
 				.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using RoseByte.DiModelBinder;
 using Xunit;
 
 namespace DiModelBinder.Tests

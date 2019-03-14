@@ -4,6 +4,6 @@ namespace DiModelBinder.IntegrationTests
 {
 	public interface IMyService
 	{
-		string FormatInputs(int id, DateTime created, bool? readOnly = null);
+		string FormatInputs(int id, DateTime created, string header, bool? readOnly = null);
 	}
 }

@@ -6,12 +6,11 @@ using RoseByte.DiModelBinder.Attributes;
 
 namespace DiModelBinder.IntegrationTests
 {
-	[DiClient]
-	public class Input : IInput
+	public class UnregisteredInput
 	{
 		private readonly IMyService _service;
 
-		public Input(IMyService service) => _service = service;
+		public UnregisteredInput(IMyService service) => _service = service;
 
 		[FromRoute]
 		public int? Id { get; set; }
@@ -22,10 +21,11 @@ namespace DiModelBinder.IntegrationTests
 		[FromQuery]
 		public DateTime? Created { get; set; }
 
+
+
 		public async Task<IActionResult> Process()
 		{
-			var result = new JsonResult(_service.FormatInputs(
-				Id ?? 0, Created ?? DateTime.MinValue, UserName));
+			var result = new JsonResult(_service.FormatInputs(Id ?? 0, Created ?? DateTime.MinValue, UserName));
 			return await Task.FromResult(result);
 		}
 	}
