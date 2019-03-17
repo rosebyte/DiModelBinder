@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>RoseByte.DiModelBinder</id>
-    <version>2.0.0</version>
+    <version>3.0.0</version>
     <title>DiModelBinder</title>
     <authors>Jaroslav Ruzicka</authors>
     <owners>Jaroslav Ruzicka</owners>

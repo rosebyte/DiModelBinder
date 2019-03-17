@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using RoseByte.DiModelBinder.Attributes;
+using RoseByte.DiModelBinder;
 
 namespace DiModelBinder.IntegrationTests.Controllers
 {
