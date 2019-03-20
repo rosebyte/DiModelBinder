@@ -72,5 +72,21 @@ namespace DiModelBinder.Tests
 			var expected = $"\"ID: {id} | Created: 01.01.0001 | UserName: {userName}\"";
 			Assert.Equal(expected, responseString);
 		}
+
+		[Fact(Skip = "Long running test")]
+		public async Task ShouldDoPerformanceTest()
+		{
+			const int id = 123;
+			const bool readOnly = true;
+			var created = DateTime.Now.ToString("MM/dd/yyyy");
+
+			var json = new JObject { { "readOnly", readOnly } };
+			var content = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
+			var response = await _client.PostAsync($"/api/values/{id}?Created={created}", content);
+			response.EnsureSuccessStatusCode();
+			var responseString = await response.Content.ReadAsStringAsync();
+			var expected = $"\"ID: {id} | Created: {created} | ReadOnly {readOnly}\"";
+			Assert.Equal(expected, responseString);
+		}
 	}
 }
